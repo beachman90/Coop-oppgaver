@@ -8,23 +8,32 @@ class Program
     {
         // Dynamisk path
         string directoryPath = AppDomain.CurrentDomain.BaseDirectory;
+        int count = 0; // Teller for å holde styr på antall .txt filer som inneholder "sommer"
+
         try
         {
-            // Bruker Directory.GetFiles med SearchOption.AllDirectories for å hente alle .txt filer fra alle undermapper
-            string[] txtFiles = Directory.GetFiles(directoryPath, "*.txt", SearchOption.AllDirectories);
+            // Bruker Directory.GetFiles med SearchOption.AllDirectories for å hente alle filer fra alle undermapper
+            string[] allFiles = Directory.GetFiles(directoryPath, "*.*", SearchOption.AllDirectories);
 
-            Console.WriteLine("Sjekker .txt filer for 'sommer':");
-            foreach (string file in txtFiles)
+            Console.WriteLine("Liste over alle filer:");
+            foreach (string file in allFiles)
             {
-                // Leser innholdet i hver fil
-                string content = File.ReadAllText(file);
+                // Skriver ut alle filene
+                Console.WriteLine(Path.GetFileName(file));
 
-                // Sjekker om filene inneholder "sommer"
-                if (content.Contains("sommer", StringComparison.OrdinalIgnoreCase)) // Ignorerer om det er store/små bokstaver
+                // Sjekker kun .txt filer for "sommer"
+                if (Path.GetExtension(file).Equals(".txt", StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine($"{file} inneholder 'sommer'");
+                    string content = File.ReadAllText(file);
+                    if (content.Contains("sommer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        count++; // Øker telleren for hver .txt fil som inneholder "sommer"
+                    }
                 }
             }
+
+            // Skriver ut totalt antall .txt filer som inneholder "sommer"
+            Console.WriteLine($"\nTotalt antall .txt filer som inneholder 'sommer': {count}");
         }
         catch (Exception ex)
         {
