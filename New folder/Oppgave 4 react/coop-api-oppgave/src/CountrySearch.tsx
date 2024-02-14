@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react"
 
 /* 
   Jeg har laget en enkel løsning for å sammenligne to land, og hvor mange flere innbyggere det ene landet har. 
-  
+  Bruker fetch for å hente info fra api'et, og har en auto complete funksjon på søkefeltene.
+  Kunne funnet på noe mer komplisert, men ønsket å holde det enkelt.
 */ 
 
 interface Country {
